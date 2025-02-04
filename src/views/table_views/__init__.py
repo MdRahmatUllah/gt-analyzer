@@ -1,6 +1,3 @@
-from .aggrid_view import render_aggrid_table
-from .dash_view import render_dash_table
-from .plotly_view import render_plotly_table
 from .ipywidgets_view import render_ipywidgets_table
 
 def render_table_views(df):
@@ -12,18 +9,12 @@ def render_table_views(df):
     # Create tabs for different visualizations
     viz_type = st.radio(
         "Select Table Visualization Type",
-        ["AgGrid", "Dash", "Plotly", "IPyWidgets"],
+        ["IPyWidgets"],
         help="Choose different libraries for interactive data tables"
     )
     
     st.write("---")
     
     # Render selected visualization
-    if viz_type == "AgGrid":
-        render_aggrid_table(df)
-    elif viz_type == "Dash":
-        render_dash_table(df)
-    elif viz_type == "Plotly":
-        render_plotly_table(df)
-    else:  # IPyWidgets
-        render_ipywidgets_table(df)
+    # IPyWidgets
+    render_ipywidgets_table(df)
