@@ -19,3 +19,4 @@ ipywidgets
 graphviz
 pyecharts
 openpyxl
+python-igraph

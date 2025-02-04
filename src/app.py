@@ -4,7 +4,6 @@ from geopy.exc import GeocoderTimedOut
 import pandas as pd
 
 # Import modular components
-from views.map_view import render_map_view
 from views.statistics_view import render_statistics_view
 from views.hierarchy_views import render_hierarchy_views
 from views.map_views import render_map_views
@@ -52,8 +51,7 @@ if uploaded_file is not None:
         filtered_df = apply_filters(df, selected_countries, min_share, show_persons)
         
         # Create tabs for different views
-        tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs(["Network Graph", "Hierarchy View", "Geographic View", "Map View", "Statistics", "Distribution", "Table View"])
-
+        tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["Network Graph", "Hierarchy View", "Geographic View", "Statistics", "Distribution", "Table View"])
         
         with tab1:
             render_network_views(filtered_df)
@@ -63,17 +61,14 @@ if uploaded_file is not None:
         
         with tab3:
             render_map_views(filtered_df)
-            
-        with tab4:
-            render_map_view(filtered_df, get_coordinates)
         
-        with tab5:
+        with tab4:
             render_statistics_view(filtered_df)
         
-        with tab6:
+        with tab5:
             render_distribution_views(filtered_df)
         
-        with tab7:
+        with tab6:
             render_table_views(filtered_df)
         
         # Export options
