@@ -1,20 +1,15 @@
 import streamlit as st
 from geopy.geocoders import Nominatim
 from geopy.exc import GeocoderTimedOut
-import pandas as pd
 
 # Import modular components
-from views.statistics_view import render_statistics_view
-from views.hierarchy_views import render_hierarchy_views
-from views.map_views import render_map_views
-from views.network_views import render_network_views
-from views.distribution_views import render_distribution_views
-from views.table_views import render_table_views
+from components.layout import init_page_layout, close_page_layout
+from components.sidebar import render_sidebar_header, render_file_upload
+from components.footer import render_footer
+from components.main_content import render_main_content
+from styles.main import load_styles
 from components.filters import render_filters, apply_filters
 from logic.data_processor import load_data, build_graph
-
-# Set page config
-st.set_page_config(page_title="Corporate Structure Visualization", layout="wide")
 
 # Cache the geocoding function
 @st.cache_data
@@ -28,55 +23,42 @@ def get_coordinates(location):
     except GeocoderTimedOut:
         return None
 
-# Main app
-st.title('Corporate Structure Visualization Tool')
-
-# Sidebar
-st.sidebar.title('Controls')
-
-# File upload
-uploaded_file = st.sidebar.file_uploader("Upload Excel/CSV file", type=["xlsx", "csv"])
-
-if uploaded_file is not None:
-    # Load and display data
-    df = load_data(uploaded_file)
+def main():
+    # Initialize page layout
+    init_page_layout()
     
-    if df is not None:
-        # Display raw data in expander
-        with st.expander("View Raw Data"):
-            st.dataframe(df)
+    # Load styles
+    load_styles()
+    
+    # Render sidebar components
+    render_sidebar_header()
+    uploaded_file = render_file_upload()
+    
+    if uploaded_file is not None:
+        # Load and process data
+        df = load_data(uploaded_file)
         
-        # Get and apply filters
-        selected_countries, min_share, show_persons = render_filters(df)
-        filtered_df = apply_filters(df, selected_countries, min_share, show_persons)
-        
-        # Create tabs for different views
-        tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["Network Graph", "Hierarchy View", "Geographic View", "Statistics", "Distribution", "Table View"])
-        
-        with tab1:
-            render_network_views(filtered_df)
+        if df is not None:
+            # Get and apply filters
+            selected_countries, min_share, show_persons = render_filters(df)
+            filtered_df = apply_filters(df, selected_countries, min_share, show_persons)
             
-        with tab2:
-            render_hierarchy_views(filtered_df)
-        
-        with tab3:
-            render_map_views(filtered_df)
-        
-        with tab4:
-            render_statistics_view(filtered_df)
-        
-        with tab5:
-            render_distribution_views(filtered_df)
-        
-        with tab6:
-            render_table_views(filtered_df)
-        
-        # Export options
-        st.sidebar.download_button(
-            "Download Filtered Data",
-            filtered_df.to_csv(index=False),
-            "filtered_data.csv",
-            "text/csv"
-        )
-else:
-    st.info('Please upload a file to begin.')
+            # Render main content
+            render_main_content(filtered_df)
+            
+            # Export options
+            st.sidebar.download_button(
+                "Download Filtered Data",
+                filtered_df.to_csv(index=False),
+                "filtered_data.csv",
+                "text/csv"
+            )
+    else:
+        render_main_content()
+    
+    # Close layout and render footer
+    close_page_layout()
+    render_footer()
+
+if __name__ == "__main__":
+    main()

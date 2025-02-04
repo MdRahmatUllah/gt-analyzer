@@ -1,0 +1,73 @@
+/* Modern Purple Sidebar Theme */
+div.css-1d391kg {  /* Sidebar */
+    background-color: #6B46C1;
+    padding: 2rem 1rem;
+}
+
+div.css-1d391kg .block-container {
+    padding-top: 2rem;
+}
+
+/* Sidebar Title */
+div.css-1d391kg h1 {
+    color: white;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+}
+
+/* Sidebar Text and Labels */
+div.css-1d391kg label, div.css-1d391kg .stMarkdown {
+    color: #E9D8FD;
+}
+
+/* Sidebar Widgets */
+div.css-1d391kg .stSelectbox, 
+div.css-1d391kg .stSlider,
+div.css-1d391kg .stCheckbox {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin: 0.5rem 0;
+}
+
+/* Buttons in Sidebar */
+div.css-1d391kg .stButton > button {
+    background-color: #9F7AEA;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+}
+
+div.css-1d391kg .stButton > button:hover {
+    background-color: #805AD5;
+    transform: translateY(-2px);
+}
+
+/* File Uploader */
+div.css-1d391kg .stFileUploader {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+/* Scrollbar */
+div.css-1d391kg::-webkit-scrollbar {
+    width: 8px;
+}
+
+div.css-1d391kg::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+div.css-1d391kg::-webkit-scrollbar-thumb {
+    background: #805AD5;
+    border-radius: 4px;
+}
+
+div.css-1d391kg::-webkit-scrollbar-thumb:hover {
+    background: #6B46C1;
+}
